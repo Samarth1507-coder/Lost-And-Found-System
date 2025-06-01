@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Items - Lost and Found System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    h2 {
+      text-align: center;
+      color: #e67e22;
+    }
+
+
+    .search-filter {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px auto;
+      flex-wrap: wrap;
+    }
+
+    .search-filter input,
+    .search-filter select {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .items-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .item-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 15px;
+      transition: transform 0.2s;
+    }
+
+    .item-card:hover {
+      transform: scale(1.02);
+    }
+
+    .item-image {
+      width: 50%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .item-name {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .item-desc {
+      font-size: 14px;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .lost {
+      background: #dc3545;
+    }
+
+    .found {
+      background: #28a745;
+    }
+  </style>
+</head>
+<body>
+  <h1>Online Lost And Found System</h1>
+  <h2>All Reported Items</h2>
+
+  <div class="search-filter">
+    <input type="text" placeholder="Search item name..." id="searchInput">
+    <select id="statusFilter">
+      <option value="">All</option>
+      <option value="lost">Lost</option>
+      <option value="found">Found</option>
+    </select>
+  </div>
+
+  <div class="items-container" id="itemsContainer">
+    <!-- Sample Items -->
+    <div class="item-card" data-status="lost">
+      <img src="C:\xampp\htdocs\Lost and Found\919V+ZDE2EL._SL1500_.jpg" class="item-image" alt="Item">
+      <div class="item-name">Black Wallet</div>
+      <div class="item-desc">Lost near library on 12th April</div>
+      <span class="badge lost">Lost</span>
+    </div>
+
+    <div class="item-card" data-status="found">
+      <img src="C:\xampp\htdocs\Lost and Found\bluewaterbottle.h02.2k.jpg" class="item-image" alt="Item">
+      <div class="item-name">Red Water Bottle</div>
+      <div class="item-desc">Found in canteen area</div>
+      <span class="badge found">Found</span>
+    </div>
+   </div>
+
+    <div class="items-container" id="itemsContainer">
+     <div class="item-card" data-status="lost">
+      <img src="C:\xampp\htdocs\Lost and Found\919V+ZDE2EL._SL1500_.jpg" class="item-image" alt="Item">
+      <div class="item-name">Red Water Bottle</div>
+      <div class="item-desc">Found in canteen area</div>
+      <span class="badge lost">Lost</span>
+    </div>
+
+     <div class="item-card" data-status="found">
+      <img src="<?php echo $row['image_path']; ?>" alt="Item Image" width="150">
+      <div class="item-name">Red Water Bottle</div>
+      <div class="item-desc">Found in canteen area</div>
+      <span class="badge found">Found</span>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const statusFilter = document.getElementById('statusFilter');
+    const items = document.querySelectorAll('.item-card');
+
+    function filterItems() {
+      const searchText = searchInput.value.toLowerCase();
+      const statusValue = statusFilter.value;
+
+      items.forEach(item => {
+        const name = item.querySelector('.item-name').textContent.toLowerCase();
+        const status = item.getAttribute('data-status');
+
+        const matchesSearch = name.includes(searchText);
+        const matchesStatus = statusValue === "" || status === statusValue;
+
+        item.style.display = (matchesSearch && matchesStatus) ? "block" : "none";
+      });
+    }
+
+    searchInput.addEventListener('input', filterItems);
+    statusFilter.addEventListener('change', filterItems);
+  </script>
+
+</body>
+</html>
